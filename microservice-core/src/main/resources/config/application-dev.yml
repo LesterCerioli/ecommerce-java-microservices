@@ -41,18 +41,18 @@ spring:
     config:
       uri: http://admin:${jhipster.registry.password}@localhost:8761/config
       # name of the config server's property source (file.yml) that we want to use
-      name: jhipster
+      name: mscore
       profile: dev
       label: main # toggle to switch to a different version of the configuration as stored in git
       # it can be set to any label, branch or commit of the configuration source Git repository
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-    url: jdbc:sqlserver://localhost:1433;database=jhipster
+    url: jdbc:sqlserver://localhost:1433;database=mscore
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   r2dbc:
-    url: r2dbc:mssql://localhost:1433/jhipster
+    url: r2dbc:mssql://localhost:1433/mscore
     username: SA
     password: yourStrong(!)Password
   thymeleaf:
@@ -68,7 +68,7 @@ spring:
         enabled: true
 
 server:
-  port: 8082
+  port: 8081
 
 # ===================================================================
 # JHipster specific properties
@@ -92,7 +92,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: ZTAzMzE1NjRhYjZhZDQwZWI1ZTBlYTdiN2YwMjA4NzFmZGU5OTJhMmYxYzE1NGVkYjAwMGQwYzVmYzAyZjI5ZjYwMDg0NjQ1MDA5OTQ3ZjkyNDU0MTI0YTkxZDM0YjI2OGE2Mzg2OGU4NmIxMGJlNDRjYzc3ZTFjZTRhZjYwMWM=
+        base64-secret: ZTU5YzVmYWJiMmU0NTExYjAyMjZiN2Y5ZjhhNDFlNDEwNmJmNGY3NmU2NGM3NDNmN2M3MTc5YWMxN2I2YThjYmRkZmY0N2UxODI2ZjI4ZDhhYWNlZGVkZjZjOTg2ZmViYzIxNmVmMmVjZDMyNTEzMWE0Y2VlOWYxYzRiY2I2ZjI=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

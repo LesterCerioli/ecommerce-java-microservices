@@ -3,7 +3,7 @@ package com.mycompany.mscore.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Properties specific to JHipster.
+ * Properties specific to Mscore.
  * <p>
  * Properties are configured in the {@code application.yml} file.
  * See {@link tech.jhipster.config.JHipsterProperties} for a good example.

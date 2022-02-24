@@ -17,12 +17,12 @@ eureka:
   client:
     enabled: false
   instance:
-    appname: jhipster
-    instanceId: jhipster:${spring.application.instance-id:${random.value}}
+    appname: mscore
+    instanceId: mscore:${spring.application.instance-id:${random.value}}
 
 spring:
   application:
-    name: jhipster
+    name: mscore
   cloud:
     config:
       enabled: false
@@ -31,7 +31,7 @@ spring:
       write-durations-as-timestamps: false
   liquibase:
     contexts: test
-    url: jdbc:h2:mem:jhipster;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:mscore;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
   mail:
     host: localhost
   main:
@@ -40,18 +40,18 @@ spring:
   messages:
     basename: i18n/messages
   r2dbc:
-    url: r2dbc:h2:mem:///jhipster;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: r2dbc:h2:mem:///mscore;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: r2dbc
     password:
   task:
     execution:
-      thread-name-prefix: jhipster-task-
+      thread-name-prefix: mscore-task-
       pool:
         core-size: 1
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: jhipster-scheduling-
+      thread-name-prefix: mscore-scheduling-
       pool:
         size: 1
   thymeleaf:
@@ -69,7 +69,7 @@ server:
 
 jhipster:
   clientApp:
-    name: 'jhipsterApp'
+    name: 'mscoreApp'
   logging:
     # To test json console appender
     use-json-format: false
@@ -82,7 +82,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: ZTAzMzE1NjRhYjZhZDQwZWI1ZTBlYTdiN2YwMjA4NzFmZGU5OTJhMmYxYzE1NGVkYjAwMGQwYzVmYzAyZjI5ZjYwMDg0NjQ1MDA5OTQ3ZjkyNDU0MTI0YTkxZDM0YjI2OGE2Mzg2OGU4NmIxMGJlNDRjYzc3ZTFjZTRhZjYwMWM=
+        base64-secret: ZTU5YzVmYWJiMmU0NTExYjAyMjZiN2Y5ZjhhNDFlNDEwNmJmNGY3NmU2NGM3NDNmN2M3MTc5YWMxN2I2YThjYmRkZmY0N2UxODI2ZjI4ZDhhYWNlZGVkZjZjOTg2ZmViYzIxNmVmMmVjZDMyNTEzMWE0Y2VlOWYxYzRiY2I2ZjI=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
 kafka:
@@ -90,7 +90,7 @@ kafka:
   consumer:
     key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
     value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    group.id: jhipster
+    group.id: mscore
     auto.offset.reset: earliest
   producer:
     key.serializer: org.apache.kafka.common.serialization.StringSerializer

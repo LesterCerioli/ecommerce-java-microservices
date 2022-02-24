@@ -17,12 +17,12 @@ eureka:
   client:
     enabled: false
   instance:
-    appname: jhipster
-    instanceId: jhipster:${spring.application.instance-id:${random.value}}
+    appname: msactivitylog
+    instanceId: msactivitylog:${spring.application.instance-id:${random.value}}
 
 mongock:
   migration-scan-package:
-    - com.mycompany.msactivitylog.config.dbmigrations
+    - com.ecommerce.msactivitylog.config.dbmigrations
   mongo-db:
     read-concern: local
     write-concern:
@@ -30,7 +30,7 @@ mongock:
 
 spring:
   application:
-    name: jhipster
+    name: msactivitylog
   cloud:
     config:
       enabled: false
@@ -47,13 +47,13 @@ spring:
     basename: i18n/messages
   task:
     execution:
-      thread-name-prefix: jhipster-task-
+      thread-name-prefix: msactivitylog-task-
       pool:
         core-size: 1
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: jhipster-scheduling-
+      thread-name-prefix: msactivitylog-scheduling-
       pool:
         size: 1
   thymeleaf:
@@ -71,7 +71,7 @@ server:
 
 jhipster:
   clientApp:
-    name: 'jhipsterApp'
+    name: 'msactivitylogApp'
   logging:
     # To test json console appender
     use-json-format: false
@@ -84,9 +84,19 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: NzZlOGRmOWI0ZGRhYzdmNjJiZmVkOWJjMGY3NDAyZDAyZDg3NTA0ZGUxOGEzZjhkMzdjYzRmODgwM2IxZTEzNDE0OGYzYThhMjA1NDNlZTJmNzg4MTc5ZmNkMTk2ZWJjMjFhZjlmZGFjZGZmNzUyNzM4NzFmMzUyNTg4ODEyYjE=
+        base64-secret: NjJjMDgyNzRkMGE4YjM0ZWQxMzhhZWQ2YTYxZWY4ZGYwNThjMTQ2MGJhYjQ3ODNjNTI2MTU5NThiNTJhYWE0YTJjNWViN2NkNDVlYjhiM2EwODU3ZWUyYzA2ZDNkY2JjNzJjMGJkNTY5YjNhN2JkMzA4NDI4OTgxNzY1YzNiMGM=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
+kafka:
+  bootstrap-servers: localhost:9092
+  consumer:
+    key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    group.id: msactivitylog
+    auto.offset.reset: earliest
+  producer:
+    key.serializer: org.apache.kafka.common.serialization.StringSerializer
+    value.serializer: org.apache.kafka.common.serialization.StringSerializer
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

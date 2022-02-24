@@ -34,8 +34,8 @@ eureka:
     instance-info-replication-interval-seconds: 10
     registry-fetch-interval-seconds: 10
   instance:
-    appname: jhipster
-    instanceId: jhipster:${spring.application.instance-id:${random.value}}
+    appname: msactivitylog
+    instanceId: msactivitylog:${spring.application.instance-id:${random.value}}
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 10
     status-page-url-path: ${management.endpoints.web.base-path}/info
@@ -111,11 +111,11 @@ management:
 
 mongock:
   migration-scan-package:
-    - com.mycompany.msactivitylog.config.dbmigrations
+    - com.ecommerce.msactivitylog.config.dbmigrations
 
 spring:
   application:
-    name: jhipster
+    name: msactivitylog
   profiles:
     # The commented value for `active` can be replaced with valid Spring profiles to load.
     # Otherwise, it will be filled in by maven when building the JAR file
@@ -136,13 +136,13 @@ spring:
     allow-circular-references: true
   task:
     execution:
-      thread-name-prefix: jhipster-task-
+      thread-name-prefix: msactivitylog-task-
       pool:
         core-size: 2
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: jhipster-scheduling-
+      thread-name-prefix: msactivitylog-scheduling-
       pool:
         size: 2
   thymeleaf:
@@ -173,7 +173,7 @@ info:
 
 jhipster:
   clientApp:
-    name: 'jhipsterApp'
+    name: 'msactivitylogApp'
   # By default CORS is disabled. Uncomment to enable.
   # cors:
   #   allowed-origins: "http://localhost:8100,http://localhost:9000"
@@ -183,12 +183,12 @@ jhipster:
   #   allow-credentials: true
   #   max-age: 1800
   mail:
-    from: jhipster@localhost
+    from: msactivitylog@localhost
   api-docs:
     default-include-pattern: ${server.servlet.context-path:}/api/**
     management-include-pattern: ${server.servlet.context-path:}/management/**
-    title: JHipster API
-    description: JHipster API documentation
+    title: Msactivitylog API
+    description: Msactivitylog API documentation
     version: 0.0.1
     terms-of-service-url:
     contact-name:
@@ -198,6 +198,16 @@ jhipster:
     license-url:
   security:
     content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:"
+kafka:
+  bootstrap-servers: localhost:9092
+  consumer:
+    key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    group.id: msactivitylog
+    auto.offset.reset: earliest
+  producer:
+    key.serializer: org.apache.kafka.common.serialization.StringSerializer
+    value.serializer: org.apache.kafka.common.serialization.StringSerializer
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
