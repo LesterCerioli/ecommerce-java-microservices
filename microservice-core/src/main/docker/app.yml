@@ -1,19 +1,19 @@
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
 version: '3.8'
 services:
-  jhipster-app:
-    image: jhipster
+  mscore-app:
+    image: mscore
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=prod,api-docs
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
       - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
-      - SPRING_R2DBC_URL=r2dbc:mssql://jhipster-mssql:1433/jhipster
-      - SPRING_LIQUIBASE_URL=jdbc:sqlserver://jhipster-mssql:1433;database=jhipster
+      - SPRING_R2DBC_URL=r2dbc:mssql://mscore-mssql:1433/mscore
+      - SPRING_LIQUIBASE_URL=jdbc:sqlserver://mscore-mssql:1433;database=mscore
       - JHIPSTER_SLEEP=60 # gives time for mssql server to start
       - KAFKA_BOOTSTRAPSERVERS=kafka:9092
-  jhipster-mssql:
+  mscore-mssql:
     image: mcr.microsoft.com/mssql/server:2019-CU14-ubuntu-20.04
     # volumes are not supported on macOS
     # volumes:
@@ -22,7 +22,7 @@ services:
       - ACCEPT_EULA=Y
       - MSSQL_PID=Express
       - SA_PASSWORD=yourStrong(!)Password
-      - MSSQL_DATABASE=jhipster
+      - MSSQL_DATABASE=mscore
       - MSSQL_SLEEP=60
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
