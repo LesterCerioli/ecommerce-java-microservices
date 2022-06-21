@@ -5,15 +5,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public class ReactiveSqlTestContainerExtension implements BeforeAllCallback {
 
     private static AtomicBoolean started = new AtomicBoolean(false);
 
-    private static PostgreSQLContainer<?> container = new PostgreSQLContainer<>(DockerImageName.parse("postgres:14.1"))
-        .withDatabaseName("mscatalog")
+    private static MSSQLServerContainer<?> container = new MSSQLServerContainer<>(
+        DockerImageName.parse("mcr.microsoft.com/mssql/server:2019-CU15-ubuntu-20.04")
+    )
         .withTmpFs(Collections.singletonMap("/testtmpfs", "rw"));
 
     @Override

@@ -9,22 +9,26 @@ services:
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
       - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
-      - SPRING_R2DBC_URL=r2dbc:postgresql://mscatalog-postgresql:5432/mscatalog
-      - SPRING_LIQUIBASE_URL=jdbc:postgresql://mscatalog-postgresql:5432/mscatalog
+      - SPRING_R2DBC_URL=r2dbc:mssql://mscatalog-mssql:1433/mscatalog
+      - SPRING_LIQUIBASE_URL=jdbc:sqlserver://mscatalog-mssql:1433;database=mscatalog
       - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
-      - KAFKA_BOOTSTRAPSERVERS=kafka:9092
-  mscatalog-postgresql:
-    image: postgres:14.1
+      - SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS=kafka:9092
+  mscatalog-mssql:
+    image: mcr.microsoft.com/mssql/server:2019-CU15-ubuntu-20.04
+    # volumes are not supported on macOS
     # volumes:
-    #   - ~/volumes/jhipster/mscatalog/postgresql/:/var/lib/postgresql/data/
+    #   - ~/volumes/jhipster/tempdb/mssql/:/var/opt/mssql/data/
     environment:
-      - POSTGRES_USER=mscatalog
-      - POSTGRES_PASSWORD=
-      - POSTGRES_HOST_AUTH_METHOD=trust
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Express
+      - SA_PASSWORD=yourStrong(!)Password
+      - MSSQL_DATABASE=mscatalog
+      - MSSQL_SLEEP=60
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:
-      - 127.0.0.1:5432:5432
+      - 127.0.0.1:1433:1433
+    command: /bin/bash -c '/opt/mssql/bin/sqlservr & echo "wait $$MSSQL_SLEEP sec for DB to start "; sleep $$MSSQL_SLEEP; /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -d tempdb -q "EXIT(CREATE DATABASE $$MSSQL_DATABASE)"; wait;'
   kafka:
     image: confluentinc/cp-kafka:5.5.7
     # If you want to expose these ports outside your dev PC,
@@ -45,7 +49,7 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
   jhipster-registry:
-    image: jhipster/jhipster-registry:v7.2.0
+    image: jhipster/jhipster-registry:v7.3.0
     volumes:
       - ./central-server-config:/central-config
     # When run with the "dev" Spring profile, the JHipster Registry will

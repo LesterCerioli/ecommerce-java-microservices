@@ -26,6 +26,21 @@ spring:
   cloud:
     config:
       enabled: false
+    stream:
+      kafka:
+        binder:
+          replicationFactor: 1
+          auto-create-topics: true
+        bindings:
+          binding-in-sse:
+            destination: sse-topic
+            content-type: text/plain
+            group: mscatalog
+          binding-out-sse:
+            destination: sse-topic
+            content-type: text/plain
+            group: mscatalog
+
   jackson:
     serialization:
       write-durations-as-timestamps: false
@@ -36,7 +51,6 @@ spring:
     host: localhost
   main:
     allow-bean-definition-overriding: true
-    allow-circular-references: true
   messages:
     basename: i18n/messages
   r2dbc:
@@ -53,7 +67,7 @@ spring:
     scheduling:
       thread-name-prefix: mscatalog-scheduling-
       pool:
-        size: 1
+        size: 20
   thymeleaf:
     mode: HTML
 
@@ -66,7 +80,6 @@ server:
 #
 # Full reference is available at: https://www.jhipster.tech/common-application-properties/
 # ===================================================================
-
 jhipster:
   clientApp:
     name: 'mscatalogApp'
@@ -82,19 +95,9 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: NDNlZmRkMjdlMzhjZTE2ZTVhMDA2ZWY1M2JkMzk4M2M5MGU2YjY2ZTViMjM0YmY0MmRjNjdlYmYzMDVhMjgxYmIzYjZmMDdjODlhOWJjNTc0OWUxNThhMWE4ZjI0MjUyZDgwODM2NDc5MDk4YWU1OWRkNjhiNzBhM2I2OWNkNDI=
+        base64-secret: ZmE3ZmM0NDg3NjQ3NjQ2YmViMmU0ODU1ZDQwNjAzMjA3YzZkMDdmMGZlNjkzNTZhNTU5NzNmMDNkZTVjNTUxYzE3MTZjZGMxM2IwNDNmOGNkYzMwNTkxYjNiOTk4ZWI2YmE4MGU5NDdiNGI4ZDY2ZjM1ZDRhMzA5ZTFhNThmYzE=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
-kafka:
-  bootstrap-servers: localhost:9092
-  consumer:
-    key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    group.id: mscatalog
-    auto.offset.reset: earliest
-  producer:
-    key.serializer: org.apache.kafka.common.serialization.StringSerializer
-    value.serializer: org.apache.kafka.common.serialization.StringSerializer
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

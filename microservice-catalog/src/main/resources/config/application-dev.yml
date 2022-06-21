@@ -48,16 +48,21 @@ spring:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-    url: jdbc:postgresql://localhost:5432/mscatalog
+    url: jdbc:sqlserver://localhost:1433;database=mscatalog
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/mscatalog
-    username: mscatalog
-    password:
+    url: r2dbc:mssql://localhost:1433/mscatalog
+    username: SA
+    password: yourStrong(!)Password
   thymeleaf:
     cache: false
   sleuth:
+    # https://github.com/spring-projects/spring-framework/issues/27844#issuescomment-1002866885
+    # https://github.com/spring-cloud/spring-cloud-sleuth/issues/2094
+    async:
+      enabled: false
+    enabled: false
     sampler:
       probability: 1 # report 100% of traces
   zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
@@ -68,7 +73,7 @@ spring:
         enabled: true
 
 server:
-  port: 8092
+  port: 8089
 
 # ===================================================================
 # JHipster specific properties
@@ -92,7 +97,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: NDNlZmRkMjdlMzhjZTE2ZTVhMDA2ZWY1M2JkMzk4M2M5MGU2YjY2ZTViMjM0YmY0MmRjNjdlYmYzMDVhMjgxYmIzYjZmMDdjODlhOWJjNTc0OWUxNThhMWE4ZjI0MjUyZDgwODM2NDc5MDk4YWU1OWRkNjhiNzBhM2I2OWNkNDI=
+        base64-secret: ZmE3ZmM0NDg3NjQ3NjQ2YmViMmU0ODU1ZDQwNjAzMjA3YzZkMDdmMGZlNjkzNTZhNTU5NzNmMDNkZTVjNTUxYzE3MTZjZGMxM2IwNDNmOGNkYzMwNTkxYjNiOTk4ZWI2YmE4MGU5NDdiNGI4ZDY2ZjM1ZDRhMzA5ZTFhNThmYzE=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

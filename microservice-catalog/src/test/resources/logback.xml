@@ -29,7 +29,6 @@
     <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
     <logger name="org.bson" level="WARN"/>
     <logger name="org.hibernate.validator" level="WARN"/>
-    <logger name="org.postgresql.jdbc" level="WARN"/>
     <logger name="org.springframework" level="WARN"/>
     <logger name="org.springframework.web" level="WARN"/>
     <logger name="org.springframework.security" level="WARN"/>
@@ -39,6 +38,7 @@
     <logger name="org.xnio" level="WARN"/>
     <logger name="kafka" level="WARN"/>
     <logger name="org.I0Itec" level="WARN"/>
+    <logger name="com.microsoft.sqlserver.jdbc.internals" level="WARN"/>
     <logger name="reactor" level="WARN"/>
     <logger name="io.swagger.v3" level="INFO"/>
     <logger name="sun.rmi" level="WARN"/>

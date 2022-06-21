@@ -16,20 +16,22 @@ class TechnicalStructureTest {
     @ArchTest
     static final ArchRule respectsTechnicalArchitectureLayers = layeredArchitecture()
         .layer("Config").definedBy("..config..")
-        .layer("Client").definedBy("..client..")
         .layer("Web").definedBy("..web..")
-        .layer("Service").definedBy("..service..")
+        .optionalLayer("Service").definedBy("..service..")
         .layer("Security").definedBy("..security..")
         .layer("Persistence").definedBy("..repository..")
         .layer("Domain").definedBy("..domain..")
 
-        .whereLayer("Config").mayOnlyBeAccessedByLayers("Web")
-        .whereLayer("Client").mayNotBeAccessedByAnyLayer()
+        .whereLayer("Config").mayNotBeAccessedByAnyLayer()
         .whereLayer("Web").mayOnlyBeAccessedByLayers("Config")
         .whereLayer("Service").mayOnlyBeAccessedByLayers("Web", "Config")
-        .whereLayer("Security").mayOnlyBeAccessedByLayers("Client", "Web", "Service", "Config")
+        .whereLayer("Security").mayOnlyBeAccessedByLayers("Config", "Service", "Web")
         .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Service", "Security", "Web", "Config")
         .whereLayer("Domain").mayOnlyBeAccessedByLayers("Persistence", "Service", "Security", "Web", "Config")
 
-        .ignoreDependency(belongToAnyOf(MscatalogApp.class), alwaysTrue());
+        .ignoreDependency(belongToAnyOf(MscatalogApp.class), alwaysTrue())
+        .ignoreDependency(alwaysTrue(), belongToAnyOf(
+            com.ecommerce.mscatalog.config.Constants.class,
+            com.ecommerce.mscatalog.config.ApplicationProperties.class
+        ));
 }
